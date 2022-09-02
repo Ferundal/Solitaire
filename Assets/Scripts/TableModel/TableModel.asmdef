@@ -1,0 +1,16 @@
+{
+    "name": "TableModel",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3ad6f5bbc5a11bb4588042db248ef078"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
