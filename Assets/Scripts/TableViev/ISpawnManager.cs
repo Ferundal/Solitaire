@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface ISpawnManager
+namespace TableViev
 {
-    public GameObject CreateObject(GameObject gameObject, Transform transform);
+    public interface ISpawnManager
+    {
+        public GameObject CreateObject(GameObject gameObject, Transform transform);
+    }
 }

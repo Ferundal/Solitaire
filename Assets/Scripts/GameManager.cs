@@ -1,3 +1,5 @@
+using TableModel;
+using TableViev;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -11,9 +13,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _tableViev = new TableViev(SpawnManager.Instance);
+        _tableViev = new TableViev.TableViev(SpawnManager.Instance);
         
-        _tableModel = new TableModel(_minCombinationLength, _maxCombinationLength, _chanceToGrowUp);
+        _tableModel = new TableModel.TableModel(_minCombinationLength, _maxCombinationLength, _chanceToGrowUp);
         for (var counter = 0; counter < _tableViev.GetSequencesAmount(); ++counter)
         {
             _tableModel.AddCardSequence(_tableViev.GetSequenceLength(counter), _tableViev.GetSequenceStartTopCard(counter));

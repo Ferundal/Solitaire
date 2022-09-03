@@ -1,114 +1,118 @@
 using System;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TableViev : ITableViev
+namespace TableViev
 {
-    private List<CardSequence> cardSequences;
-    private BankSequence bankSequence;
-
-    public TableViev (ISpawnManager spawnManager)
+    public class TableViev : ITableViev
     {
-        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
-        cardSequences = CardSequence.FindCardSequences(cards);
-        foreach (CardSequence card in cardSequences)
+        private List<CardSequence> _cardSequences;
+        private BankSequence _bankSequence;
+
+        public TableViev (ISpawnManager spawnManager)
         {
-            Debug.Log(card);
+            GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
+            _cardSequences = CardSequence.FindCardSequences(cards);
+            foreach (CardSequence card in _cardSequences)
+            {
+                Debug.Log(card);
+            }
+            GameObject bankPosition = GameObject.FindGameObjectWithTag("Bank");
+            _bankSequence = new BankSequence(bankPosition, spawnManager);
         }
-        GameObject bankPosition = GameObject.FindGameObjectWithTag("Bank");
-        bankSequence = new BankSequence(bankPosition, spawnManager);
-    }
 
-    public int GetSequencesAmount()
-    {
-        return cardSequences.Count;
-    }
+        public int GetSequencesAmount()
+        {
+            return _cardSequences.Count;
+        }
 
-    public int GetSequenceLength(int squenceIndex)
-    {
-        return cardSequences[squenceIndex].Count;
-    }
+        public int GetSequenceLength(int squenceIndex)
+        {
+            return _cardSequences[squenceIndex].Count;
+        }
 
-    public Card GetSequenceStartTopCard(int squenceIndex)
-    {
-        string spriteName = cardSequences[squenceIndex].GetCard(cardSequences[squenceIndex].Count - 1).GetComponent<Image>().sprite.name;
-        return CardFromString(spriteName);
-    }
+        public Card GetSequenceStartTopCard(int squenceIndex)
+        {
+            string spriteName = _cardSequences[squenceIndex].GetCard(_cardSequences[squenceIndex].Count - 1).GetComponent<Image>().sprite.name;
+            return CardFromString(spriteName);
+        }
 
-    public void SetSequenceTopCard(int squenceIndex, int cardIndex, Card card)
-    {
-        CardSequence cardSequence = cardSequences[squenceIndex];
-        cardSequence.SetActive(cardIndex);
-    }
+        public void SetSequenceTopCard(int squenceIndex, int cardIndex, Card card)
+        {
+            CardSequence cardSequence = _cardSequences[squenceIndex];
+            cardSequence.SetActive(cardIndex);
+        }
 
-    public void SetBankSequence(int cardAmount)
-    {
+        public void SetBankSequence(int cardAmount)
+        {
 
-    }
+        }
 
-    public void SetActiveCard(Card card)
-    {
+        public void SetActiveCard(Card card)
+        {
         
-    }
-
-    public GameObject CardToPrefab(Card card)
-    {
-        return null;
-    }
-
-    private Card CardFromString(string cardName)
-    {
-        bool isCardNameConvertible = false;
-        Card resultCard = new Card();
-        string[] cardSuitsNames = Enum.GetNames(typeof(Card.Suit));
-        Array cardSuitsValues = Enum.GetValues(typeof(Card.Suit));
-        for (int counter = 0; counter < cardSuitsNames.Length; ++counter)
-        {
-            if (cardName.IndexOf(cardSuitsNames[counter]) > -1)
-            {
-                resultCard.suit = (Card.Suit)cardSuitsValues.GetValue(counter);
-                isCardNameConvertible = true;
-                break;
-            }
         }
-        if (!isCardNameConvertible)
+
+        public GameObject CardToPrefab(Card card)
         {
             return null;
         }
-        isCardNameConvertible = false;
-        string[] cardNumeralsNames = Enum.GetNames(typeof(Card.Numeral));
-        Array cardNumeralsValues = Enum.GetValues(typeof(Card.Numeral));
-        for (int counter = 0; counter < cardNumeralsNames.Length; ++counter)
+
+        private Card CardFromString(string cardName)
         {
-            if (cardName.IndexOf(cardNumeralsNames[counter]) > -1)
+            bool isCardNameConvertible = false;
+            Card resultCard = new Card();
+            string[] cardSuitsNames = Enum.GetNames(typeof(Card.Suit));
+            Array cardSuitsValues = Enum.GetValues(typeof(Card.Suit));
+            for (int counter = 0; counter < cardSuitsNames.Length; ++counter)
             {
-                resultCard.numeral = (Card.Numeral)cardNumeralsValues.GetValue(counter);
-                isCardNameConvertible = true;
-                break;
+                if (cardName.IndexOf(cardSuitsNames[counter]) > -1)
+                {
+                    resultCard.suit = (Card.Suit)cardSuitsValues.GetValue(counter);
+                    isCardNameConvertible = true;
+                    break;
+                }
             }
-        }
-        if (!isCardNameConvertible)
-        {
-            return null;
-        }
-        return resultCard;
-    }
-
-    public int FindSequenceIndexByTopObject(GameObject gameObject)
-    {
-        for(int counter = 0; counter < cardSequences.Count; ++counter)
-        {
-            if (cardSequences[counter].isTopGameObject(gameObject))
+            if (!isCardNameConvertible)
             {
-                return counter;
+                return null;
             }
+            isCardNameConvertible = false;
+            string[] cardNumeralsNames = Enum.GetNames(typeof(Card.Numeral));
+            Array cardNumeralsValues = Enum.GetValues(typeof(Card.Numeral));
+            for (int counter = 0; counter < cardNumeralsNames.Length; ++counter)
+            {
+                if (cardName.IndexOf(cardNumeralsNames[counter]) > -1)
+                {
+                    resultCard.numeral = (Card.Numeral)cardNumeralsValues.GetValue(counter);
+                    isCardNameConvertible = true;
+                    break;
+                }
+            }
+            if (!isCardNameConvertible)
+            {
+                return null;
+            }
+            return resultCard;
         }
-        return (-1);
-    }
 
-    public void Disable()
-    {
+        public int FindSequenceIndexByTopObject(GameObject gameObject)
+        {
+            for(int counter = 0; counter < _cardSequences.Count; ++counter)
+            {
+                if (_cardSequences[counter].IsTopGameObject(gameObject))
+                {
+                    return counter;
+                }
+            }
+            return (-1);
+        }
 
+        public void Disable()
+        {
+
+        }
     }
 }

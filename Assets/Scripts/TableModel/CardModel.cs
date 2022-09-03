@@ -1,44 +1,46 @@
-
-using UnityEngine;
 using System;
+using Core;
 
-public class CardModel : Card
+namespace TableModel
 {
-    public CardModel() { }
-    public CardModel(Card card) : base(card) {
-
-    }
-    public CardModel CreateHigher()
+    public class CardModel : Card
     {
-        CardModel cardModel = new CardModel(this);
-        if (numeral == Card.Numeral.Ace)
-        {
-            cardModel.numeral = Card.Numeral.Two;
-        } else
-        {
-            ++cardModel.numeral;
-        }
-        return cardModel;
-    }
+        public CardModel() { }
+        public CardModel(Card card) : base(card) {
 
-    public CardModel CreateLower()
-    {
-        CardModel cardModel = new CardModel(this);
-        if (numeral == Card.Numeral.Two)
-        {
-            cardModel.numeral = Card.Numeral.Ace;
         }
-        else
+        public CardModel CreateHigher()
         {
-            --cardModel.numeral;
+            CardModel cardModel = new CardModel(this);
+            if (numeral == Card.Numeral.Ace)
+            {
+                cardModel.numeral = Card.Numeral.Two;
+            } else
+            {
+                ++cardModel.numeral;
+            }
+            return cardModel;
         }
-        return cardModel;
-    }
 
-    public void SetRandomSuit()
-    {
-        Array suitValues = Enum.GetValues(typeof(Card.Suit));
-        int suitCapacity = suitValues.Length;
-        suit = (Card.Suit)suitValues.GetValue(UnityEngine.Random.Range(0, suitCapacity));
+        public CardModel CreateLower()
+        {
+            CardModel cardModel = new CardModel(this);
+            if (numeral == Card.Numeral.Two)
+            {
+                cardModel.numeral = Card.Numeral.Ace;
+            }
+            else
+            {
+                --cardModel.numeral;
+            }
+            return cardModel;
+        }
+
+        public void SetRandomSuit()
+        {
+            Array suitValues = Enum.GetValues(typeof(Card.Suit));
+            int suitCapacity = suitValues.Length;
+            suit = (Card.Suit)suitValues.GetValue(UnityEngine.Random.Range(0, suitCapacity));
+        }
     }
 }

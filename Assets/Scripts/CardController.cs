@@ -3,14 +3,14 @@ using UnityEngine.EventSystems;
 
 public class CardController : MonoBehaviour, IPointerDownHandler
 {
-    private GameManager gameManager;
+    private GameManager _gameManager;
     public void OnPointerDown(PointerEventData eventData)
     {
-        gameManager.CardPressed(this.gameObject);
+        _gameManager.CardPressed(this.gameObject);
     }
 
     private void Awake()
     {
-        gameManager = (GameManager)GameManager.FindObjectOfType(typeof(GameManager));
+        _gameManager = (GameManager)GameManager.FindObjectOfType(typeof(GameManager));
     }
 }

@@ -1,104 +1,107 @@
-using System.Collections;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 
-public class TableModel : ITableModel
+namespace TableModel
 {
-    private int _minCombinationLength;
-    private int _maxCombinationLength;
-    private float _chanceToGrowUp;
-    private List<CardNode> currentSequencesTopCards;
-    private CardNode bankSequenceTop;
-    public TableModel(int minCombinationLength, int maxCombinationLength, float chanceToGrowUp)
+    public class TableModel : ITableModel
     {
-        _minCombinationLength = minCombinationLength;
-        _maxCombinationLength = maxCombinationLength;
-        _chanceToGrowUp = chanceToGrowUp;
-        currentSequencesTopCards = new List<CardNode>();
-    }
-
-    public void AddCardSequence(int cardAmount, Card topCard)
-    {
-        CardNode newCardModel = new CardNode(topCard);
-        newCardModel.AddParents(cardAmount);
-        currentSequencesTopCards.Add(newCardModel);
-    }
-
-    public void Build()
-    {
-        List<CardNode> topCardsCombinations = GenerateTopCardsCombinations();
-        int parentsAmount = 0;
-        foreach (CardNode cardNode in currentSequencesTopCards)
+        private int _minCombinationLength;
+        private int _maxCombinationLength;
+        private float _chanceToGrowUp;
+        private List<CardNode> _currentSequencesTopCards;
+        private CardNode _bankSequenceTop;
+        public TableModel(int minCombinationLength, int maxCombinationLength, float chanceToGrowUp)
         {
-            parentsAmount += cardNode.GetParentsAmount();
+            _minCombinationLength = minCombinationLength;
+            _maxCombinationLength = maxCombinationLength;
+            _chanceToGrowUp = chanceToGrowUp;
+            _currentSequencesTopCards = new List<CardNode>();
         }
-        while (topCardsCombinations.Count > 1)
+
+        public void AddCardSequence(int cardAmount, Card topCard)
         {
-            int currentCombinationIndex = Random.Range(0, topCardsCombinations.Count);
-            //bankSequenceTop.Add
+            CardNode newCardModel = new CardNode(topCard);
+            newCardModel.AddParents(cardAmount);
+            _currentSequencesTopCards.Add(newCardModel);
         }
-        
-    }
 
-    private List<CardNode> GenerateTopCardsCombinations()
-    {
-        List<CardNode> resultCombinations = new List<CardNode>();
-        return resultCombinations;
-    }
-    public Card GetBankActiveCard()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public int GetBankLength()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Card GetBankTopCard()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public int GetSequenceLength(int squenceIndex)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public int GetSequencesAmount()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Card GetSequenceTopCard(int squenceIndex)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public bool NextBankCard()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public bool NextSquenceCard(int squenceIndex)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public bool IsGameOver()
-    {
-        foreach(CardNode cardNode in currentSequencesTopCards)
+        public void Build()
         {
-            if (cardNode != null)
+            List<CardNode> topCardsCombinations = GenerateTopCardsCombinations();
+            int parentsAmount = 0;
+            foreach (CardNode cardNode in _currentSequencesTopCards)
             {
-                return false;
+                parentsAmount += cardNode.GetParentsAmount();
             }
+            while (topCardsCombinations.Count > 1)
+            {
+                int currentCombinationIndex = Random.Range(0, topCardsCombinations.Count);
+                //bankSequenceTop.Add
+            }
+        
         }
-        return true;
-    }
 
-    public void ResetModel()
-    {
-        throw new System.NotImplementedException();
+        private List<CardNode> GenerateTopCardsCombinations()
+        {
+            List<CardNode> resultCombinations = new List<CardNode>();
+            return resultCombinations;
+        }
+        public Card GetBankActiveCard()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int GetBankLength()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Card GetBankTopCard()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int GetSequenceLength(int squenceIndex)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int GetSequencesAmount()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Card GetSequenceTopCard(int squenceIndex)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool NextBankCard()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool NextSquenceCard(int squenceIndex)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsGameOver()
+        {
+            foreach(CardNode cardNode in _currentSequencesTopCards)
+            {
+                if (cardNode != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void ResetModel()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
